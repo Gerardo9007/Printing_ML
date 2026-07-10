@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Runtime outputs / logs (regenerated, not source)
+webapp/backend/results/
+webapp/backend/*.log
+webapp/frontend/*.log
+webapp/ml-training/data/
+webapp/ml-training/*.log
+docs/dev/*/output/
+docs/dev/*/__pycache__/
+
+# OS / editor
+.DS_Store
