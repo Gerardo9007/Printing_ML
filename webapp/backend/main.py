@@ -15,7 +15,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
 import pipeline_bridge
+import pipeline_bridge_dieblade
 import storage
+import storage_dieblade
 
 app = FastAPI(title="Print-Plate Defect Viewer API")
 
@@ -161,6 +163,105 @@ async def get_result(run_id: str):
 @app.get("/api/results/{run_id}/{filename}")
 async def get_result_image(run_id: str, filename: str):
     path = storage.result_image_path(run_id, filename)
+    if path is None:
+        raise ApiError(404, "NOT_FOUND", f"이미지를 찾을 수 없습니다: {run_id}/{filename}")
+    return FileResponse(path, media_type="image/png")
+
+
+# ---------------------------------------------------------------------------
+# 과제② 목형 칼날검사 (die-blade) — 별도 네임스페이스, 별도 저장소
+# ---------------------------------------------------------------------------
+
+def _die_blade_image_urls(run_id: str) -> dict:
+    base = f"/api/die-blade/results/{run_id}"
+    return {
+        "reference": f"{base}/reference.png",
+        "aligned": f"{base}/aligned.png",
+        "detections": f"{base}/detections.png",
+    }
+
+
+@app.get("/api/die-blade/health")
+async def die_blade_health():
+    return {
+        "status": "ok",
+        "default_reference_available": (
+            pipeline_bridge_dieblade.default_reference_available()
+            and pipeline_bridge_dieblade.default_actual_available()
+        ),
+    }
+
+
+@app.get("/api/die-blade/history")
+async def die_blade_history():
+    return {"history": storage_dieblade.list_runs()}
+
+
+@app.post("/api/die-blade/analyze")
+async def die_blade_analyze(
+    actual: UploadFile = File(...),
+    reference: UploadFile | None = File(None),
+):
+    actual_bytes = await actual.read()
+    if not actual_bytes:
+        raise ApiError(400, "BAD_REQUEST", "'actual' 이미지가 비어 있습니다.")
+    actual_bgr = _decode_upload(actual_bytes)
+
+    ground_truth = None
+    reference_mode = "user_uploaded" if reference is not None else "stored_default"
+    if reference is not None:
+        reference_bytes = await reference.read()
+        if not reference_bytes:
+            raise ApiError(400, "BAD_REQUEST", "'reference' 이미지가 비어 있습니다.")
+        reference_bgr = _decode_upload(reference_bytes)
+    else:
+        if not pipeline_bridge_dieblade.default_reference_available():
+            raise ApiError(
+                400,
+                "BAD_REQUEST",
+                "'reference'가 없고 저장된 기본 참조 이미지도 존재하지 않습니다.",
+            )
+        reference_bgr = pipeline_bridge_dieblade.imread_unicode(
+            pipeline_bridge_dieblade.DEFAULT_REFERENCE_PATH
+        )
+        if reference_bgr is None:
+            raise ApiError(500, "INTERNAL", "기본 참조 이미지를 읽지 못했습니다.")
+        if pipeline_bridge_dieblade.default_gt_available():
+            with open(pipeline_bridge_dieblade.DEFAULT_GT_PATH, encoding="utf-8") as f:
+                ground_truth = json.load(f)
+
+    run_id, run_path = storage_dieblade.create_run_dir()
+    try:
+        result = pipeline_bridge_dieblade.analyze(
+            reference_bgr, actual_bgr, run_path, ground_truth=ground_truth
+        )
+    except Exception as exc:
+        raise ApiError(500, "INTERNAL", f"파이프라인 처리 중 오류: {exc}")
+
+    response = {
+        "id": run_id,
+        "created_at": datetime.now().astimezone().isoformat(),
+        "reference_mode": reference_mode,
+        "registration": result["registration"],
+        "detections": result["detections"],
+        "metrics": result["metrics"],
+        "image_urls": _die_blade_image_urls(run_id),
+    }
+    storage_dieblade.save_result_json(run_id, response)
+    return response
+
+
+@app.get("/api/die-blade/results/{run_id}")
+async def die_blade_get_result(run_id: str):
+    response = storage_dieblade.load_result_json(run_id)
+    if response is None:
+        raise ApiError(404, "NOT_FOUND", f"결과를 찾을 수 없습니다: {run_id}")
+    return response
+
+
+@app.get("/api/die-blade/results/{run_id}/{filename}")
+async def die_blade_get_result_image(run_id: str, filename: str):
+    path = storage_dieblade.result_image_path(run_id, filename)
     if path is None:
         raise ApiError(404, "NOT_FOUND", f"이미지를 찾을 수 없습니다: {run_id}/{filename}")
     return FileResponse(path, media_type="image/png")

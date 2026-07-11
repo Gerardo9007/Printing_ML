@@ -3,8 +3,8 @@
 ## 현재 상태 요약 (2026-07-10 기준)
 
 - **task1-print-plate**: 프로토타입(정합+픽셀diff) → 웹앱(`webapp/`)으로 발전, OCR 결합(Initiative A) + 신뢰도 분류기(Initiative B)까지 구현·검증 완료.
-- **task2-die-blade**: 데모/QA 리포트 완료, 이후 진행 없음.
-- PDCA phase: `do` (task1-print-plate, phase 3)
+- **task2-die-blade**: 프로토타입(정합+diff, 휨/끊김/마모/위치오차 4클래스) → task1과 동일 구조로 웹앱화 + 신뢰도 분류기 ML 확장까지 완료(2026-07-11).
+- PDCA phase: `do` (task1-print-plate, phase 3 / task2-die-blade, phase 3)
 
 ---
 
@@ -53,19 +53,48 @@
 - **아키텍처 만화**(webapp/ARCHITECTURE.md를 인쇄소 도면 방+배관 구조로 표현): https://claude.ai/code/artifact/5f1555a4-de6c-4dbe-874f-c9aedb3f96d1
 - 둘 다 라이트/다크 테마 Playwright 렌더링 검증 완료(다크모드 벤다이어그램 블렌드모드 버그, JSX 중괄호 이스케이프 버그 각 1건 발견 후 수정)
 
+### ⑦ 2026-07-11 — git 저장소 초기화 + 오검출 케이스 브라우저 검증
+- 프로젝트 루트에 git 저장소 신규 초기화, `.gitignore` 작성(node_modules/.next/__pycache__/결과물 폴더/.bkit·.claude·.omc 툴 상태 제외), 전체 소스 2회 커밋
+- 원격(`github.com/Gerardo9007/Printing_ML`) 연결 시도 — 계정 권한 문제(`superpjh-stack`이 해당 저장소에 push 권한 없음, GitHub API로 확인)로 **push는 보류 중**, 로컬 커밋까지만 완료
+- 브라우저(Playwright)로 오검출 케이스 실측: 참조 이미지 자체를 "결함 이미지"로 올렸을 때 — 박스 1개(area_ratio 1.12%, 오검출 가드레일 통과) but reliability_score=0.00 → "확인 필요" 뱃지 정상 표시. 규칙 기반 가드레일과 분류기가 서로 다른 이유로 독립적으로 작동함을 확인
+
+### ⑧ 신뢰도 분류기 데이터셋/라벨링/피처엔지니어링 상세 (Initiative B)
+- **데이터 생성**(`ml-training/generate_dataset.py`): 실제 파이프라인(정합→diff→OCR merge)을 반복 실행해 합성 생성. 결함 조합 14종(없음·단독5·쌍7·전성분3중·전체) × 정합오차 6회 변주 × robust-threshold k스윕([6.0,4.0,3.0,2.0], k를 낮출수록 QA 발견1급 거대 오검출이 재현되어 네거티브 샘플로 수확) → 60쌍×240회 실행 → 1,242 rows
+- **라벨링**: `label = 1 iff (GT overlap>0.05) AND (area_ratio≤0.20)` — 스펙 원문(overlap만으로 라벨링)은 거대 오검출도 GT를 덮으면 label=1이 되는 모순이 있어, 오검출 가드레일 조건을 AND로 추가해 해결(결정 근거를 `dataset_manifest.json`에 기록). 결과: positive 255 / negative 987, source별로는 `ocr_diff` 단독 박스는 양성 0건(항상 신뢰 낮음), `both`는 74/78이 양성(가장 신뢰 높은 신호)
+- **피처 엔지니어링**(`reliability.py::extract_features`, 10개): area_ratio·aspect_ratio·mean/std_diff_intensity·edge_density(라플라시안 분산)·n_nearby_boxes·registration_n_inliers·diff_threshold_used(8개, v1) + max_diff_intensity·diff_pixel_fraction(2개, v2 신규) — v2 추가 이유: OCR 박스가 패딩 때문에 커서 평균값으로는 박스 안의 작은 진짜 결함 신호가 희석되는 문제를, crop 내 최댓값/임계값 이상 픽셀비율로 보완
+- **학습**(`train_reliability.py`): 75/25 stratified split, StandardScaler, LogisticRegression(class_weight="balanced"). 런타임에는 scikit-learn 없이 coef/scaler를 JSON export해 순수 numpy로 추론(경량화). val: accuracy 98.1%/precision 91.4%/recall 100%, FN 0건
+- 안전장치: 로드시 `feature_names`/`schema_version` 불일치 감지 → 조용히 스코어링 비활성화(None)
+
+### ⑨ 2026-07-11 — task2-die-blade 웹앱화 (task1과 동일 구조)
+- 코드 확인 결과 문서(Gap 분석)보다 실제 코드가 앞서 있었음: 휨/끊김뿐 아니라 **마모(3등급)·위치오차**까지 이미 구현되어 있었음(G3/G4가 실제로는 코드상 해소된 상태)
+- `docs/dev/task2-die-blade/generate_webapp_demo.py` 신규: 웹앱 기본 참조/실물/GT 자산 생성(휨+끊김2+마모 복합 시나리오 + 위치오차 단독 시나리오)
+- `webapp/backend/pipeline_bridge_dieblade.py`, `storage_dieblade.py` 신규: task1과 같은 sys.path 브릿지 전략으로 `die_blade_qc_demo.py`를 그대로 재사용. `main.py`에 `/api/die-blade/*` 라우트 추가(별도 저장소 네임스페이스)
+- `webapp/frontend/app/die-blade/*`, `components/dieblade/*` 신규: 업로드/결과 페이지, 지표 패널(정합 잔차·위치오차·결함유형별 카운트)/검출목록/주석이미지 컴포넌트. `HistorySidebar`에 인쇄판↔목형칼날 앱 스위처 추가
+- 백엔드 curl 검증: 복합 데모(휨+끊김2+마모) recall 100%(4/4), 위치오차 단독 데모(6.1mm>5mm 허용) 정상 판정
+- 프론트엔드 Playwright 검증: 업로드→분석→결과 화면 전체 플로우, 콘솔 에러 0건, 앱 스위처 정상 동작 확인 (스크린샷 확인 완료)
+### ⑩ 2026-07-11 — task2용 신뢰도 분류기 ML 확장 (task1 Initiative B 상응)
+- **피처 엔지니어링 설계**: task1과 달리 결함이 4종 이질적 형태(휨/끊김/마모/위치오차, bbox+mm 편차+등급 등 필드가 서로 다름)라 kind를 원-핫(`is_bend`/`is_break`/`is_wear`/`is_position`)으로 인코딩. `reliability_dieblade.py`에 12개 피처: area_ratio·aspect_ratio·max/mean_deviation_mm·arc_length_mm·n_nearby_defects(박스 단위) + registration_residual_mm·position_shift_mm(전역) + kind 원-핫 4개
+- **데이터 생성**(`generate_dataset_dieblade.py`): `pipeline_bridge_dieblade.analyze(run_dir=None)`를 그대로 재사용(파일 I/O 생략 모드 추가)해 실제 파이프라인으로 합성. 결함 조합 14종(없음·단독4·쌍6·삼중·전체) × 정합오차 10회 변주 + **대각도(30~90°) 오수렴 레짐 20회**를 별도로 네거티브 수확용으로 추가(QA §2-B 재현) → 150쌍, 391 rows (positive 198 / negative 193)
+- **라벨링 버그 발견·수정**: 위치오차 검출은 설계상 bbox가 항상 "도면 전체 바운딩박스"라 면적비가 항상 ~27%로 커서, task1과 같은 오검출 면적가드(15%)를 그대로 적용했더니 위치오차 진짜 양성이 전부 0으로 잘못 라벨링됨 → 위치오차는 면적가드 예외 처리로 수정. 부수 발견: "휨" 단독 태그는 탐지기 설계상 항상 "끊김"도 동시에 걸려 `복합`으로 병합되므로 데이터셋에 순수 "휨" 양성이 구조적으로 존재하지 않음(버그 아님, 탐지기 자체 특성)
+- **학습**(`train_reliability_dieblade.py`): task1과 동일 설정(75/25 stratified, StandardScaler, LogisticRegression balanced). val: **accuracy 87.8%, precision 97.5%, recall 78.0%** (task1의 100%보다 낮음 — 정직하게 기록. FN 11건, 특히 마모 등급 경계 부근 애매한 케이스에서 재현율이 떨어짐)
+- **검증**: 45° 오수렴 레짐(registration_reliable=False) 입력 시 9개 검출 전부 reliability_score 0.001~0.02로 정확히 낮게 판정 — 규칙 기반 정합 신뢰도 플래그와 별개로 분류기가 독립적으로 동일 결론에 도달함을 확인. 브라우저 Playwright 검증 통과(콘솔 에러 0)
+
 ---
 
 ## 해야할 일 (남은 작업)
 
-1. **Gap 분석(2026-07-08) 잔여 항목**
-   - G4: 원본↔버전 검증 게이트 미구현 (오검출 주원인 미차단)
-   - G5: 실제 인쇄물/스캔 이미지로 파라미터 재튜닝 (현재 전부 합성 이미지 기준)
-   - G6~G8: 검사자 UI의 HITL 강제 라우팅, MES 연계 미구현
-2. **이식성 부채**: `generate_labels.py`의 `C:/Windows/Fonts/malgun.ttf` 절대경로 하드코딩 → 비Windows 환경 실행 불가
-3. 신뢰도 분류기 decision_threshold(현재 0.5 고정) 실사용 데이터 기반 재보정 여부 검토
+1. **task2 분류기 recall 개선 검토** — 현재 78%로 task1(100%)보다 낮음. 데이터셋 규모 확대 또는 마모 등급 경계 피처 보강 필요
+2. **Gap 분석(2026-07-08) 잔여 항목**
+   - task1 G4: 원본↔버전 검증 게이트 미구현 (오검출 주원인 미차단)
+   - task1 G5 / task2 G1: 실제 촬영/스캔 이미지로 파라미터 재튜닝 (현재 전부 합성 이미지 기준)
+   - task1 G6~G8 / task2 G6~G10: 검사자 UI의 HITL 강제 라우팅, MES 연계 미구현
+   - task2 G2: 이상탐지 모델(PatchCore/PaDiM) 미적용 (현재는 고전적 정합+diff만)
+3. **이식성 부채**: `generate_labels.py`/`die_blade_qc_demo.py`의 `C:/Windows/Fonts/malgun.ttf` 절대경로 하드코딩 → 비Windows 환경 실행 불가
+4. 두 신뢰도 분류기 모두 decision_threshold(현재 0.5 고정) 실사용 데이터 기반 재보정 여부 검토
+5. 이번 세션 변경사항(task2 웹앱화 + ML 확장 전체) 아직 git 커밋 안 됨
 
 ---
 
-## 실행 중인 프로세스 (2026-07-10 세션)
-- Backend: `python -m uvicorn main:app --reload --port 8000` (background, log: `webapp/backend/backend4.log`)
+## 실행 중인 프로세스 (2026-07-11 기준)
+- Backend: `python -m uvicorn main:app --reload --port 8000` (background, log: `webapp/backend/backend6.log`)
 - Frontend: `npm run dev` (background, log: `webapp/frontend/frontend2.log`)

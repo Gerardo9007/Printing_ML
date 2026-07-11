@@ -222,3 +222,163 @@ export function readStashedResult(id: string): AnalyzeResponse | null {
     return null;
   }
 }
+
+// ---------------------------------------------------------------------------
+// 과제② 목형 칼날검사 (die-blade) — 별도 파이프라인/응답 모양, 별도 네임스페이스
+// ---------------------------------------------------------------------------
+
+export type DieBladeKind = "휨" | "끊김" | "마모" | "위치오차" | string; // "복합(휨+끊김 의심)" 등도 포함
+
+export interface DieBladeDetectionItem {
+  index: number;
+  kind: DieBladeKind;
+  bbox: BBox;
+  area_px: number;
+  max_deviation_mm: number;
+  arc_length_mm: number;
+  mean_deviation_mm: number; // 마모(G3)만 의미 있음; 그 외 0
+  wear_grade: string; // "정상" | "주의" | "교체"; 마모 외에는 빈 문자열
+  note: string;
+  reliability_score: number | null; // 0..1 from classifier; null if model absent
+}
+
+export interface DieBladeRegistration {
+  converged: boolean;
+  residual_mm: number;
+  reliable: boolean;
+}
+
+export interface DieBladePositionError {
+  estimated_shift_px: number;
+  estimated_shift_mm: number;
+  estimated_angle_deg: number;
+  tol_mm: number;
+  is_position_error: boolean;
+}
+
+export interface DieBladePerDefectItem {
+  type: DieBladeKind;
+  note: string;
+  detected: boolean;
+  reliable_detected: boolean;
+}
+
+export interface DieBladeMetrics {
+  n_detections: number;
+  registration_converged: boolean;
+  registration_residual_mm: number;
+  registration_residual_tol_mm: number;
+  registration_reliable: boolean;
+  position_error: DieBladePositionError;
+  detection_count_by_kind: Record<string, number>;
+  recall: number | null;
+  reliable_recall: number | null;
+  n_defects_total: number | null;
+  n_defects_detected: number | null;
+  critical_missed: boolean | null;
+  per_defect: DieBladePerDefectItem[];
+}
+
+export interface DieBladeImageUrls {
+  reference: string;
+  aligned: string;
+  detections: string;
+}
+
+export interface DieBladeAnalyzeResponse {
+  id: string;
+  created_at: string | null;
+  reference_mode: ReferenceMode | null;
+  registration: DieBladeRegistration;
+  detections: DieBladeDetectionItem[];
+  metrics: DieBladeMetrics;
+  image_urls: DieBladeImageUrls;
+}
+
+export interface DieBladeHistoryItem {
+  id: string;
+  created_at: string | null;
+  reference_mode: ReferenceMode | null;
+  n_detections: number;
+  recall: number | null;
+  critical_missed: boolean | null;
+  registration_reliable: boolean | null;
+  thumbnail_url: string;
+}
+
+export async function getDieBladeHealth(): Promise<HealthResponse> {
+  let res: Response;
+  try {
+    res = await fetch("/api/die-blade/health", { cache: "no-store" });
+  } catch {
+    throw new ApiError("NETWORK", "백엔드에 연결할 수 없습니다.");
+  }
+  if (!res.ok) throw await parseError(res);
+  return res.json();
+}
+
+export interface DieBladeAnalyzeInput {
+  actual: File;
+  reference?: File | null;
+}
+
+export async function dieBladeAnalyze(
+  input: DieBladeAnalyzeInput
+): Promise<DieBladeAnalyzeResponse> {
+  const form = new FormData();
+  form.append("actual", input.actual);
+  if (input.reference) form.append("reference", input.reference);
+
+  let res: Response;
+  try {
+    res = await fetch("/api/die-blade/analyze", { method: "POST", body: form });
+  } catch {
+    throw new ApiError("NETWORK", "백엔드에 연결할 수 없습니다.");
+  }
+  if (!res.ok) throw await parseError(res);
+  return res.json();
+}
+
+export async function getDieBladeResult(id: string): Promise<DieBladeAnalyzeResponse> {
+  let res: Response;
+  try {
+    res = await fetch(`/api/die-blade/results/${encodeURIComponent(id)}`, {
+      cache: "no-store",
+    });
+  } catch {
+    throw new ApiError("NETWORK", "백엔드에 연결할 수 없습니다.");
+  }
+  if (!res.ok) throw await parseError(res);
+  return res.json();
+}
+
+export async function getDieBladeHistory(): Promise<DieBladeHistoryItem[]> {
+  let res: Response;
+  try {
+    res = await fetch("/api/die-blade/history", { cache: "no-store" });
+  } catch {
+    throw new ApiError("NETWORK", "백엔드에 연결할 수 없습니다.");
+  }
+  if (!res.ok) throw await parseError(res);
+  const body = (await res.json()) as { history: DieBladeHistoryItem[] };
+  return body.history ?? [];
+}
+
+const dieBladeStashKey = (id: string) => `dieblade-result:${id}`;
+
+export function stashDieBladeResult(resp: DieBladeAnalyzeResponse): void {
+  try {
+    sessionStorage.setItem(dieBladeStashKey(resp.id), JSON.stringify(resp));
+  } catch {
+    // storage may be unavailable/full; refetch path covers it
+  }
+}
+
+export function readStashedDieBladeResult(id: string): DieBladeAnalyzeResponse | null {
+  try {
+    const raw = sessionStorage.getItem(dieBladeStashKey(id));
+    return raw ? (JSON.parse(raw) as DieBladeAnalyzeResponse) : null;
+  } catch {
+    return null;
+  }
+}
