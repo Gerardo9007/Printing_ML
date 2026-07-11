@@ -1,0 +1,1147 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-07-10T14:43:04.459Z",
+  "activeFeatures": [
+    "task1-print-plate",
+    "task2-die-blade",
+    "scratchpad",
+    "backend",
+    "frontend",
+    "[id]",
+    "test-images",
+    "ml-training"
+  ],
+  "primaryFeature": "task1-print-plate",
+  "features": {
+    "task1-print-plate": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-07T07:30:04.664Z",
+        "lastUpdated": "2026-07-10T06:39:36.032Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\docs\\dev\\task1-print-plate\\generate_labels.py"
+    },
+    "task2-die-blade": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-07T07:30:50.446Z",
+        "lastUpdated": "2026-07-08T06:20:23.542Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\docs\\dev\\task2-die-blade\\die_blade_qc_demo.py"
+    },
+    "scratchpad": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-07T07:38:37.116Z",
+        "lastUpdated": "2026-07-10T14:43:04.459Z"
+      },
+      "lastFile": "C:\\Users\\amore\\AppData\\Local\\Temp\\claude\\C--Users-amore-Desktop-26--AP-Claude-Play-Ground-08-Printing-ML\\c091461b-9612-4c60-9dc0-468f375859fd\\scratchpad\\shot_arch.js"
+    },
+    "backend": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-09T02:22:03.419Z",
+        "lastUpdated": "2026-07-10T04:49:57.653Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\backend\\reliability.py"
+    },
+    "frontend": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-09T04:18:36.954Z",
+        "lastUpdated": "2026-07-10T12:14:01.444Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\frontend\\components\\DetectionList.tsx"
+    },
+    "[id]": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-09T05:01:57.592Z",
+        "lastUpdated": "2026-07-09T05:01:57.592Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\frontend\\app\\results\\[id]\\page.tsx"
+    },
+    "test-images": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-09T06:40:35.314Z",
+        "lastUpdated": "2026-07-09T06:40:35.314Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\test-images\\generate_single_defect_samples.py"
+    },
+    "ml-training": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-10T03:10:13.152Z",
+        "lastUpdated": "2026-07-10T06:44:32.821Z"
+      },
+      "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\ml-training\\generate_dataset.py"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-07-07T06:23:52.562Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-07-10T14:43:04.459Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-07-07T07:30:04.664Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:30:18.131Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:30:39.457Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:30:50.446Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:31:06.705Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:31:44.602Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:31:54.169Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:32:01.695Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:32:07.133Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:33:12.037Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:33:15.285Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:33:28.112Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:33:32.096Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:34:13.891Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:38:37.116Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:39:25.786Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:40:30.772Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:41:18.911Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:43:05.033Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:56:39.856Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:57:00.879Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:57:37.494Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:57:43.549Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:58:01.076Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:58:26.905Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:58:50.356Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:59:05.673Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:59:11.142Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T07:59:57.386Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:01:25.077Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:03:31.516Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:04:01.356Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:04:15.171Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:04:39.887Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:05:01.222Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:05:09.623Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:05:39.529Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-07T08:06:08.529Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:00:30.337Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:00:48.272Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:01:04.019Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:01:17.060Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:01:34.107Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:01:44.298Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:02:21.443Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T01:02:55.290Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T04:59:17.540Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:02:05.882Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:02:39.672Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:02:54.755Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:03:01.738Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:03:11.701Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:03:25.154Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:05:09.262Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:05:24.712Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:06:15.909Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:06:35.619Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:14:07.084Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:47:03.079Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T05:51:35.331Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:09:44.998Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:11:22.907Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:13:10.776Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:14:33.171Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:14:52.332Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:15:05.496Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:15:28.757Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:15:45.068Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:16:34.371Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:16:50.898Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:17:07.395Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:17:18.178Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:17:54.039Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:18:14.080Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:18:36.906Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:19:04.712Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:19:18.825Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-08T06:20:23.542Z",
+      "feature": "task2-die-blade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T01:02:42.850Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T02:22:03.419Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:00:11.959Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:00:46.226Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:01:40.206Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:18:36.954Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:21:13.616Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:29:38.315Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:34:22.982Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:39:58.223Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:45:17.104Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:52:01.332Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T04:54:40.225Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:00:11.994Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:01:57.592Z",
+      "feature": "[id]",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:02:46.136Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:04:28.382Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:05:36.721Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:09:51.835Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:11:15.354Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T05:12:00.359Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T06:40:35.314Z",
+      "feature": "test-images",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:05.802Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:14.205Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:25.449Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:33.730Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:42.020Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:20:57.490Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:21:01.391Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:21:10.072Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:21:36.083Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:21:51.623Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:22:04.517Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:22:19.024Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:22:28.070Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:22:44.721Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:22:54.498Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:24:31.097Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:24:39.448Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-09T08:24:57.458Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T01:57:18.138Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T02:12:18.074Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:05:54.838Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:07:14.726Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:07:23.722Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:07:33.784Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:07:58.312Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:08:24.096Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:08:37.716Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:08:45.766Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:08:54.043Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:10:13.152Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:11:29.028Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:11:46.213Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:11:59.345Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:12:07.038Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:12:13.882Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:12:23.169Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:12:32.140Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T03:13:29.325Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T04:49:32.325Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T04:49:49.305Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T04:49:57.653Z",
+      "feature": "backend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:28:24.918Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:28:41.871Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:29:00.739Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:29:16.263Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:29:40.419Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T05:59:17.249Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:38:50.323Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:39:07.413Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:39:25.015Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:39:36.032Z",
+      "feature": "task1-print-plate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:39:52.255Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:42:39.007Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:42:54.855Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:43:11.230Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:43:28.119Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:43:41.685Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:43:58.247Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T06:44:32.821Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:12:59.773Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:13:15.863Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:13:24.676Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:13:33.426Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:13:44.175Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:13:51.653Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:14:01.444Z",
+      "feature": "frontend",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T12:32:36.980Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T13:38:56.999Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-10T14:43:04.459Z",
+      "feature": "scratchpad",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}

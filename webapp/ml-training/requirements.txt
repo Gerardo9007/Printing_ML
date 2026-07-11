@@ -1,0 +1,8 @@
+# ml-training deps (heavy; TRAINING ONLY — NOT installed in the runtime backend).
+# The runtime backend scores with pure numpy from committed JSON artifacts
+# (see webapp/ML-ARCHITECTURE.md §1 "Runtime dependency decision").
+scikit-learn>=1.3
+pandas>=2.0
+numpy>=1.24
+opencv-python>=4.8
+Pillow>=10.0

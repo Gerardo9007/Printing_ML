@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>와이엔프린팅 이미지 ML — 데이터 방법론</title>
+<style>
+  :root{
+    --navy:#1F3864; --blue:#2E5496; --lblue:#D6E0F0; --lblue2:#EAF0FA;
+    --green:#375623; --lgreen:#E2EFDA; --or:#C55A11; --lor:#FCE4D6;
+    --grey:#808080; --lgrey:#F2F2F2; --yel:#FFF2CC; --border:#BFBFBF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"맑은 고딕","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    background:#f4f6fa; color:#1a1a1a; line-height:1.5;}
+  header{background:var(--navy); color:#fff; padding:22px 28px;}
+  header h1{margin:0; font-size:20px; font-weight:700;}
+  header p{margin:6px 0 0; font-size:13px; color:#cdd7ec;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 20px 60px;}
+  .tabs{display:flex; flex-wrap:wrap; gap:4px; margin:18px 0 0; border-bottom:2px solid var(--navy);}
+  .tab{padding:11px 18px; cursor:pointer; font-size:13.5px; font-weight:600;
+    background:#e3e8f2; color:#3a4a68; border:1px solid var(--border); border-bottom:none;
+    border-radius:8px 8px 0 0;}
+  .tab:hover{background:#d0d9ec;}
+  .tab.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .panel{display:none; background:#fff; border:1px solid var(--border); border-top:none;
+    padding:22px; border-radius:0 0 10px 10px; box-shadow:0 2px 8px rgba(0,0,0,.05);}
+  .panel.active{display:block;}
+  h2{font-size:16px; color:var(--navy); margin:0 0 4px;}
+  .sub{font-size:12.5px; color:#5a6478; margin:0 0 16px;}
+  table{width:100%; border-collapse:collapse; font-size:12.8px;}
+  th,td{border:1px solid var(--border); padding:9px 10px; vertical-align:top; text-align:left;}
+  th{background:var(--blue); color:#fff; font-weight:700; text-align:center;}
+  td.rowhead{background:var(--lgrey); font-weight:700; white-space:nowrap;}
+  .stage{font-weight:700; text-align:center; white-space:nowrap;}
+  .s-su{background:var(--lblue);} .s-au{background:var(--lgreen);} .s-co{background:var(--lor);}
+  .pr{text-align:center; font-weight:700; white-space:nowrap;}
+  .pr-hi{color:#b00020;} .pr-mid{color:#9a6b00;}
+  .mark{text-align:center; font-weight:700; font-size:15px;}
+  .m-o{background:var(--lgreen); color:#2b6a1e;}
+  .m-t{background:var(--yel); color:#8a6100;}
+  .m-x{background:var(--lor); color:#b0341a;}
+  .legend{font-size:12px; color:#5a6478; margin:0 0 14px;}
+  .overview td{vertical-align:middle;}
+  .badge{display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;}
+  footer{text-align:center; font-size:11.5px; color:#8a93a6; margin-top:26px;}
+  .ex-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .ex-card{flex:1 1 280px; border:1px solid var(--border); border-radius:12px; padding:14px; background:#fff;}
+  .ex-card.bad{border-color:#E24B4A;}
+  .ex-cap{font-size:13px; color:#5a6478; margin-bottom:10px; font-weight:600;}
+  .ex-card.bad .ex-cap{color:#b0341a;}
+  .lbl{border:1px solid var(--border); border-radius:8px; padding:14px; font-size:12.5px; line-height:2; color:#1a1a1a;}
+  .lbl .big{font-size:16px; font-weight:600; letter-spacing:.5px;}
+  .lbl .muted{color:#5a6478;}
+  .lbl .ing{border-top:1px solid var(--border); margin-top:10px; padding-top:10px; font-size:11.5px; color:#5a6478; line-height:1.9;}
+  .hl{outline:2px solid #E24B4A; background:#FCE4D6; border-radius:3px; padding:0 3px;}
+  .smudge{text-shadow:0 0 4px #808080;}
+  .bdg{background:#E24B4A; color:#fff; border-radius:50%; padding:1px 5px; font-size:11px; margin-left:3px;}
+  .lg{display:flex; flex-wrap:wrap; gap:10px 20px; margin-top:14px; font-size:12px; color:#5a6478;}
+  .lg b{color:#b0341a;}
+  .flow{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid var(--border); font-size:12px;}
+  .chip{background:var(--lblue2); color:var(--blue); border-radius:8px; padding:5px 10px;}
+  .chip.dg{background:#FCE4D6; color:#b0341a;}
+  .flow .arw{color:#9aa3b5;}
+  .ex-note{background:var(--lblue2); border-left:4px solid var(--blue); padding:12px 14px; border-radius:0 8px 8px 0; font-size:12.8px; color:#2a3550; margin:20px 0;}
+  @media(max-width:640px){.tab{flex:1 1 auto; text-align:center;} table{font-size:11.5px;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>와이엔프린팅 이미지 ML — 데이터 방법론</h1>
+  <p>2개 비전 AI 과제의 데이터 수집·증강·보정 전략 · 기준일 2026-07-07 · 현황: 일부 이미지 보유</p>
+</header>
+<div class="wrap">
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-t="p0">개요</div>
+    <div class="tab" data-t="pe">쉬운 설명 (예시)</div>
+    <div class="tab" data-t="p1">① 인쇄판 문안검사</div>
+    <div class="tab" data-t="p2">② 목형 칼날검사</div>
+    <div class="tab" data-t="p3">증강 기법 상세</div>
+    <div class="tab" data-t="p4">라벨링·품질·목표</div>
+  </div>
+
+  <!-- 개요 -->
+  <div class="panel active" id="p0">
+    <h2>데이터 방법론 개요</h2>
+    <p class="sub">2개 과제의 데이터 관점 비교</p>
+    <table class="overview">
+      <tr><th style="width:15%">구분</th><th style="width:42.5%">① 인쇄판 문안 정합성 검사 AI</th><th style="width:42.5%">② 목형 칼날 불량 검사 AI</th></tr>
+      <tr><td class="rowhead">과제 목적</td><td>OCR·비전으로 인쇄판 이미지와 디자인 원본을 비교, 문안 정합성 자동 검증</td><td>비전으로 목형 이미지와 기준 형상을 비교, 칼날 상태·형상 자동 검증</td></tr>
+      <tr><td class="rowhead">검출 대상</td><td>문자 누락, 오탈자, 점(마침표·기호) 누락, 번짐, 성분표시 누락·위치오류</td><td>칼날 휨, 끊김(절단 불량), 위치 오차, 마모</td></tr>
+      <tr><td class="rowhead">문제 유형</td><td>참조기반 이상검출 = 이미지 정합(Registration) + OCR + 차분(Diff)</td><td>이상탐지(Anomaly Detection) + 형상 정합 + 결함 세그멘테이션</td></tr>
+      <tr><td class="rowhead">핵심 데이터 난제</td><td>불량 샘플 희소 / 원본-인쇄물 정합쌍 필요 / 미세 결함(점·자간)</td><td>불량 실물 확보 극히 어려움 / 형상 다품종 / 마모는 연속량</td></tr>
+      <tr><td class="rowhead">권장 접근(데이터)</td><td>합성 결함 대량 생성(원본에서 자동 라벨) + 실측 정합쌍 소량</td><td>정상 다량 학습 기반 이상탐지 + 합성 결함 삽입 + 폐목형 재활용</td></tr>
+      <tr><td class="rowhead">치명 오류(우선순위)</td><td>성분표시 누락·오탈자 → 법적 리스크. 재현율(누락 0) 최우선</td><td>칼날 끊김·휨 → 톰슨 불량·재작업. 결함 재현율 최우선</td></tr>
+      <tr><td class="rowhead">보유 현황</td><td>일부 검사 이미지 보유 → 표준 재촬영 + 합성 증강으로 확충</td><td>일부 이미지 보유 → 지그 표준촬영 + 합성 결함으로 확충</td></tr>
+    </table>
+  </div>
+
+  <!-- 쉬운 설명 예시 -->
+  <div class="panel" id="pe">
+    <h2>예시로 보는 두 검사 — 정답과 실제를 겹쳐 다른 곳을 찾는다</h2>
+    <p class="sub">두 과제 모두 원리는 같습니다. 정답(원본·도면)에 실제 이미지를 겹쳐 어긋난 곳을 자동으로 표시합니다.</p>
+
+    <h3 style="color:var(--navy); font-size:14.5px; margin:18px 0 8px;">① 인쇄판 문안검사</h3>
+    <div class="ex-row">
+      <div class="ex-card">
+        <div class="ex-cap">① 디자인 원본 (정답)</div>
+        <div class="lbl">
+          <div class="big">SOOTHING TONER</div>
+          <div>수분 진정 토너</div>
+          <div class="muted">용량 200 mL</div>
+          <div class="ing">전성분: 정제수, 글리세린, 나이아신아마이드, 판테놀, 히알루론산</div>
+          <div class="muted" style="font-size:11.5px;">사용기한: 별도표기.</div>
+        </div>
+      </div>
+      <div class="ex-card bad">
+        <div class="ex-cap">② 실제 인쇄물 — AI 검출 결과</div>
+        <div class="lbl">
+          <div class="big">SOOTHING TONER</div>
+          <div>수분 진정 <span class="hl">토노</span><sup class="bdg">1</sup></div>
+          <div class="muted">용량 200 mL</div>
+          <div class="ing">전성분: 정제수, 글리세린, <span class="hl">나이아신마이드</span><sup class="bdg">2</sup>, <span class="hl smudge">판테놀</span><sup class="bdg">4</sup>, 히알루론산</div>
+          <div class="muted" style="font-size:11.5px;">사용기한: 별도표기<span class="hl">&nbsp;</span><sup class="bdg">3</sup></div>
+        </div>
+      </div>
+    </div>
+    <div class="lg">
+      <span><b>1</b> 오탈자 — 토너 → 토노</span>
+      <span><b>2</b> 문자 누락 — 나이아신<b>아</b>마이드의 '아' 빠짐</span>
+      <span><b>3</b> 점 누락 — 문장 끝 마침표 없음</span>
+      <span><b>4</b> 번짐 — 잉크 확산으로 글자 뭉개짐</span>
+    </div>
+    <div class="flow">
+      <span style="color:#8a93a6;">AI 처리 순서</span>
+      <span class="chip">원본과 정밀 정렬</span><i class="arw">→</i>
+      <span class="chip">픽셀 차이 비교</span><i class="arw">→</i>
+      <span class="chip dg">다른 곳 자동 표시</span>
+    </div>
+
+    <h3 style="color:var(--navy); font-size:14.5px; margin:28px 0 8px;">② 목형 칼날검사</h3>
+    <div class="ex-row">
+      <div class="ex-card">
+        <div class="ex-cap">① 기준 형상 (설계 도면)</div>
+        <svg viewBox="0 0 280 200" width="100%" role="img" aria-label="정상 목형 칼날의 기준 형상 외곽선">
+          <path d="M66,40 H214 Q230,40 230,56 V150 Q230,166 214,166 H66 Q50,166 50,150 V56 Q50,40 66,40 Z" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-dasharray="7 5"/>
+          <text x="140" y="108" fill="#8a93a6" font-size="12" text-anchor="middle">칼날 절단선</text>
+        </svg>
+      </div>
+      <div class="ex-card bad">
+        <div class="ex-cap">② 실제 목형 — AI 검출 결과</div>
+        <svg viewBox="0 0 280 200" width="100%" role="img" aria-label="실제 목형에서 휨, 끊김, 마모, 위치 오차가 검출된 모습">
+          <path d="M66,40 H214 Q230,40 230,56 V150 Q230,166 214,166 H66 Q50,166 50,150 V56 Q50,40 66,40 Z" fill="none" stroke="#1D9E75" stroke-width="2" stroke-dasharray="4 4" opacity="0.28"/>
+          <path d="M66,40 Q140,20 214,40" fill="none" stroke="#E24B4A" stroke-width="3"/>
+          <path d="M230,56 V92" fill="none" stroke="#888780" stroke-width="2.5"/>
+          <path d="M230,116 V150 Q230,166 214,166" fill="none" stroke="#888780" stroke-width="2.5"/>
+          <path d="M214,166 H66" fill="none" stroke="#E24B4A" stroke-width="2" stroke-dasharray="2 5" opacity="0.7"/>
+          <path d="M50,150 V64" fill="none" stroke="#888780" stroke-width="2.5"/>
+          <path d="M58,64 Q58,50 72,49 L140,47" fill="none" stroke="#E24B4A" stroke-width="3"/>
+          <circle cx="140" cy="22" r="11" fill="#E24B4A"/><text x="140" y="26" fill="#fff" font-size="12" text-anchor="middle">1</text>
+          <circle cx="230" cy="104" r="11" fill="#E24B4A"/><text x="230" y="108" fill="#fff" font-size="12" text-anchor="middle">2</text>
+          <circle cx="140" cy="166" r="11" fill="#E24B4A"/><text x="140" y="170" fill="#fff" font-size="12" text-anchor="middle">3</text>
+          <circle cx="60" cy="52" r="11" fill="#E24B4A"/><text x="60" y="56" fill="#fff" font-size="12" text-anchor="middle">4</text>
+        </svg>
+      </div>
+    </div>
+    <div class="lg">
+      <span><b>1</b> 휨 — 칼날이 바깥으로 굽음</span>
+      <span><b>2</b> 끊김 — 칼날 선이 잘림 (절단 불량)</span>
+      <span><b>3</b> 마모 — 칼날이 닳아 흐릿·약함</span>
+      <span><b>4</b> 위치 오차 — 모서리가 밀려남</span>
+    </div>
+    <div class="flow">
+      <span style="color:#8a93a6;">AI 처리 순서</span>
+      <span class="chip">기준 형상에 겹치기</span><i class="arw">→</i>
+      <span class="chip">형상 차이 측정 (mm)</span><i class="arw">→</i>
+      <span class="chip dg">이상 위치 자동 표시</span>
+    </div>
+    <p style="font-size:12px; color:#5a6478; margin-top:10px;">흐린 초록 점선 = 설계 기준선(정답 위치), 진한 회색 = 실제 칼날, 빨간색 = AI가 잡아낸 이상.</p>
+
+    <div class="ex-note"><b>핵심</b> — 불량 샘플은 실제로 거의 없습니다. 그래서 정답(원본·도면)에서 오탈자·끊김 같은 결함을 인위적으로 만들어(합성 증강) 학습량을 채우고, 목형은 정상을 잔뜩 학습시켜 '평소와 다른 모양'을 이상으로 잡습니다.</div>
+  </div>
+
+  <!-- 인쇄판 -->
+  <div class="panel" id="p1">
+    <h2>① 인쇄판 문안 정합성 검사 AI — 데이터 방법론</h2>
+    <p class="sub">수집 → 증강 → 보정/정제 단계별 실행 방법 (OCR + 비전 정합/차분)</p>
+    <table>
+      <tr><th style="width:7%">단계</th><th style="width:16%">항목</th><th style="width:36%">세부 실행 방법</th><th style="width:27%">목적 / 근거</th><th style="width:14%">우선순위·주의</th></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">정상(OK) 데이터</td><td>승인 완료된 인쇄판·1차 출력물을 고해상도 스캔(텍스트 최소 600dpi). 제품·폰트·언어별로 폭넓게 확보</td><td>정상 분포 학습·차분 기준 확보</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">디자인 원본(GT)</td><td>AI·PDF 벡터 원본을 동일 배율로 라스터화하여 '정답' 기준 이미지 생성</td><td>참조기반 diff의 정답지</td><td class="pr pr-hi">高 / 버전 일치</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">정합쌍 구성</td><td>동일 LOT의 (원본 ↔ 인쇄물) 페어를 1:1 매칭하여 저장</td><td>정합·차분 학습의 핵심 단위</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">실불량(NG) 샘플</td><td>실제 발생 오탈자·누락·번짐 검사 반려품을 유형·좌표와 함께 아카이빙</td><td>평가셋·현실성 검증용</td><td class="pr pr-mid">中 / test 집중</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">촬영 표준화</td><td>조명·배경·해상도·정렬·ICC 색프로파일 고정. 스캐너/라인스캔카메라 지그 사용</td><td>도메인 편차 제거</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">메타데이터</td><td>제품코드·LOT·인쇄판버전·원본링크·검사결과·불량유형·좌표 스키마화(MES 연계)</td><td>Traceability·자동 라벨</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">합성 오탈자·누락</td><td>원본 텍스트에서 문자 삭제/치환/이동/자간변형을 프로그램 생성(라벨 자동 부여)</td><td>불량 희소성 해결 — 최대 효과</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">점·기호 누락</td><td>마침표·쉼표·상표기호(®,™) 미세 요소를 삭제/축소해 합성</td><td>미세 결함 검출력 강화</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">번짐·잉크 확산</td><td>가우시안 블러, 모폴로지 팽창, 잉크 blob·도트게인 시뮬레이션</td><td>번짐 불량 재현</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">인쇄·스캔 노이즈</td><td>하프톤, 센서 노이즈, JPEG 아티팩트, 미세 얼룩 추가</td><td>촬영 환경 강건성</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">기하 지터(미세)</td><td>±1~2° 회전, 소폭 원근/스케일로 정합 오차 모사</td><td>Registration 강건성</td><td class="pr pr-mid">中 / 반전 금지</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">조명·색상 지터</td><td>밝기·대비·화이트밸런스·채도 소폭 변화</td><td>조명 편차 대응</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">이미지 정합(Registration)</td><td>특징점·호모그래피로 원본과 인쇄물 정밀 정렬 후 차분</td><td>오검출(정렬오차) 제거의 핵심</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">전처리 정규화</td><td>데스큐(기울기 보정), 배경 제거, 해상도 통일, 명암·색상 정규화</td><td>입력 일관성 확보</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">문자 정규화</td><td>유니코드 NFC 통일, 혼동쌍(O/0, l/1, ㅇ/0) 사전 구축</td><td>OCR 오탈자 오판 감소</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">라벨 노이즈 제거</td><td>OCR 결과-사람 교차검증, 이중검수, 이상 라벨 필터링</td><td>라벨 신뢰도 확보</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">클래스 불균형 보정</td><td>합성:실측 비율 조정, focal loss, 가중 샘플링</td><td>희소 불량 학습 안정화</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">데이터 분할</td><td>제품·LOT 단위 train/val/test 분리(누수 방지). 실불량은 test 충분 확보</td><td>성능 과대평가 방지</td><td class="pr pr-hi">高</td></tr>
+    </table>
+  </div>
+
+  <!-- 목형 -->
+  <div class="panel" id="p2">
+    <h2>② 목형 칼날 불량 검사 AI — 데이터 방법론</h2>
+    <p class="sub">수집 → 증강 → 보정/정제 단계별 실행 방법 (이상탐지 + 형상 정합)</p>
+    <table>
+      <tr><th style="width:7%">단계</th><th style="width:16%">항목</th><th style="width:36%">세부 실행 방법</th><th style="width:27%">목적 / 근거</th><th style="width:14%">우선순위·주의</th></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">정상(OK) 데이터</td><td>정상 목형을 형상·제품·크기별로 다량 촬영. 이상탐지 학습의 기반</td><td>정상 분포 밀도 확보</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">기준 형상(GT)</td><td>목형 설계 CAD·도면을 기준 형상으로 등록(오버레이 기준)</td><td>위치오차·형상 diff 정답지</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">불량(NG) 샘플</td><td>휨·끊김·마모·위치오차 실물 확보. 폐기 목형 재활용·인위적 손상 샘플 제작</td><td>평가·현실성 검증</td><td class="pr pr-mid">中 / 극희소</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">촬영 표준화</td><td>고정 지그·동일 각/거리. 백라이트(실루엣) 또는 텔레센트릭 렌즈로 에지 정확 캡처</td><td>형상·에지 정밀도 확보</td><td class="pr pr-hi">高 / 반사통제</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">마모 이력</td><td>목형 ID·누적 사용횟수·타발 수량 연계(마모와 상관)</td><td>마모 회귀·등급화 근거</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-su">수집</td><td class="rowhead">메타데이터</td><td>목형ID·제품·검사결과·불량유형·불량위치 스키마화(MES 연계)</td><td>Traceability·자동 라벨</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">합성 결함 삽입</td><td>기준 에지에 국소 끊김(픽셀 삭제)·휨(warp)·마모(에지 blur/두께변화)·위치이동 생성</td><td>불량 희소성 해결 — 최대 효과</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">이상탐지용 합성</td><td>CutPaste 등으로 정상 이미지에 인위적 이상 패치 삽입</td><td>라벨없는 이상탐지 보강</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">기하 증강</td><td>회전(형상검사라 360° 가능)·이동·스케일·대칭 플립(형상 대칭 시)</td><td>형상·자세 다양성</td><td class="pr pr-mid">中 / 좌표 동기화</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">조명·반사 변화</td><td>조명 방향·강도, 금속 광택·그림자·반사 하이라이트 변화</td><td>촬영 환경 강건성</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-au">증강</td><td class="rowhead">배경·이물 노이즈</td><td>배경 변화, 먼지·이물 등 방해요소 추가</td><td>오검출 저감</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">형상 정합·오버레이</td><td>기준 CAD 대비 정렬 후 형상 diff → 위치오차 정량화</td><td>위치오차 검출의 핵심</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">스케일 캘리브레이션</td><td>체커보드·캘리브레이션 타겟으로 픽셀↔실측(mm) 변환</td><td>휨·위치오차 mm 단위 측정</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">보정</td><td class="rowhead">전처리</td><td>배경 세그멘테이션, 에지 추출(Canny), 조명 정규화, 편광으로 반사 억제</td><td>형상·에지 신호 강화</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">이상탐지 우선</td><td>정상 다량 기반 PatchCore·PaDiM 등 활용(불량 라벨 부족 대응)</td><td>희소 불량 실무 대응</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">마모 연속량 처리</td><td>사용횟수 기반 회귀 또는 마모 등급(정상/주의/교체) 라벨링</td><td>이진 분류 한계 보완</td><td class="pr pr-mid">中</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">라벨 검수</td><td>불량 위치·유형 이중검수, 좌표 정합 확인</td><td>라벨 신뢰도 확보</td><td class="pr pr-hi">高</td></tr>
+      <tr><td class="stage s-co">정제</td><td class="rowhead">데이터 분할</td><td>목형ID·제품 단위 train/val/test 분리. 실불량은 test 충분 확보</td><td>성능 과대평가 방지</td><td class="pr pr-hi">高</td></tr>
+    </table>
+  </div>
+
+  <!-- 증강 기법 -->
+  <div class="panel" id="p3">
+    <h2>데이터 증강 기법 상세 — 과제별 적용 가이드</h2>
+    <p class="legend"><span class="badge m-o">○ 권장</span> &nbsp; <span class="badge m-t">△ 조건부/주의</span> &nbsp; <span class="badge m-x">✕ 금지</span> &nbsp; · 권장 파라미터는 시작값(데이터로 튜닝)</p>
+    <table>
+      <tr><th style="width:15%">기법</th><th style="width:24%">설명</th><th style="width:19%">권장 파라미터(시작값)</th><th style="width:9%">①인쇄판</th><th style="width:9%">②목형</th><th style="width:24%">비고·주의</th></tr>
+      <tr><td class="rowhead">합성 결함 생성</td><td>원본/기준에서 결함을 프로그램 생성(라벨 자동)</td><td>실불량 유형 분포 반영</td><td class="mark m-o">○</td><td class="mark m-o">○</td><td>두 과제 공통 최우선 기법</td></tr>
+      <tr><td class="rowhead">기하 회전</td><td>이미지 회전</td><td>①±1~2° / ②0~360°</td><td class="mark m-t">△</td><td class="mark m-o">○</td><td>①텍스트 판독 훼손 주의, 과회전 금지</td></tr>
+      <tr><td class="rowhead">좌우/상하 반전</td><td>이미지 미러링</td><td>-</td><td class="mark m-x">✕</td><td class="mark m-t">△</td><td>①문자 의미 파괴 → 금지 / ②형상 대칭시만</td></tr>
+      <tr><td class="rowhead">스케일·크롭</td><td>확대·축소·부분자름</td><td>0.9~1.1x</td><td class="mark m-t">△</td><td class="mark m-o">○</td><td>①문자 잘림 주의</td></tr>
+      <tr><td class="rowhead">원근·탄성 왜곡</td><td>perspective / elastic</td><td>소폭</td><td class="mark m-t">△</td><td class="mark m-t">△</td><td>과도시 실제분포 이탈</td></tr>
+      <tr><td class="rowhead">블러·번짐</td><td>Gaussian blur, 모폴로지 팽창</td><td>σ=0.5~1.5</td><td class="mark m-o">○</td><td class="mark m-t">△</td><td>①번짐 결함 재현 / ②마모 표현</td></tr>
+      <tr><td class="rowhead">노이즈 추가</td><td>Gaussian·salt&amp;pepper, JPEG</td><td>경미</td><td class="mark m-o">○</td><td class="mark m-o">○</td><td>촬영·스캔 노이즈 모사</td></tr>
+      <tr><td class="rowhead">밝기·대비</td><td>brightness/contrast jitter</td><td>±10~20%</td><td class="mark m-o">○</td><td class="mark m-o">○</td><td>조명 편차 대응</td></tr>
+      <tr><td class="rowhead">색상·채도</td><td>hue/saturation jitter</td><td>±10%</td><td class="mark m-o">○</td><td class="mark m-t">△</td><td>①색 편차 / ②금속 광택 변화</td></tr>
+      <tr><td class="rowhead">그림자·반사</td><td>조명방향·하이라이트 합성</td><td>-</td><td class="mark m-t">△</td><td class="mark m-o">○</td><td>②금속 목형 반사 강건성 핵심</td></tr>
+      <tr><td class="rowhead">CutPaste/CutMix</td><td>패치 잘라붙이기(이상 생성)</td><td>-</td><td class="mark m-t">△</td><td class="mark m-o">○</td><td>②이상탐지 보강에 효과적</td></tr>
+      <tr><td class="rowhead">배경·이물 합성</td><td>배경 치환·이물 삽입</td><td>-</td><td class="mark m-t">△</td><td class="mark m-o">○</td><td>오검출 저감</td></tr>
+      <tr><td class="rowhead">Copy-Paste 결함</td><td>실불량 패치를 정상에 이식</td><td>실불량 crop 활용</td><td class="mark m-o">○</td><td class="mark m-o">○</td><td>실불량 소량을 대량 확장</td></tr>
+    </table>
+  </div>
+
+  <!-- 라벨링 -->
+  <div class="panel" id="p4">
+    <h2>라벨링 스키마 · 데이터 품질 · 목표 성능</h2>
+    <p class="sub">라벨 정의와 검증 기준</p>
+    <table>
+      <tr><th style="width:16%">항목</th><th style="width:32%">① 인쇄판 문안검사</th><th style="width:32%">② 목형 칼날검사</th><th style="width:20%">비고</th></tr>
+      <tr><td class="rowhead">라벨 형식</td><td>불량 종류 + Bounding Box/영역 좌표 + 텍스트 diff</td><td>불량 종류 + 영역 세그멘테이션/좌표 + 위치오차(mm)</td><td>좌표 기반 → 위치 시각화</td></tr>
+      <tr><td class="rowhead">클래스 정의</td><td>정상 / 문자누락 / 오탈자 / 점누락 / 번짐 / 성분표시오류</td><td>정상 / 휨 / 끊김 / 위치오차 / 마모</td><td>혼동 클래스 가이드 문서화</td></tr>
+      <tr><td class="rowhead">라벨 도구</td><td>OCR 자동 diff + 사람 검수(Label Studio 등)</td><td>세그멘테이션 툴 + 기준형상 오버레이</td><td>자동+수동 병행</td></tr>
+      <tr><td class="rowhead">이중검수</td><td>2인 교차검수, 불일치 조정 룰</td><td>2인 교차검수</td><td>라벨 신뢰도 확보</td></tr>
+      <tr><td class="rowhead">데이터 분할</td><td>제품·LOT 단위 (누수 방지)</td><td>목형ID·제품 단위</td><td>train/val/test = 70/15/15 예시</td></tr>
+      <tr><td class="rowhead">불량 확보</td><td>합성 다량 + 실불량은 test 중심</td><td>합성 다량 + 실불량은 test 중심</td><td>실불량으로 최종 검증</td></tr>
+      <tr><td class="rowhead">핵심 지표</td><td>재현율(누락=0 목표) 우선, Precision, F1, mAP</td><td>결함 재현율 우선, IoU, mAP, 위치오차 mm</td><td>치명 오류 미검출 최소화</td></tr>
+      <tr><td class="rowhead">목표 방향</td><td>성분표시·오탈자 미검출 0 지향, 오검출은 재검으로 흡수</td><td>끊김·휨 미검출 0 지향</td><td>사업계획 목표수준: 기초→중간1</td></tr>
+    </table>
+  </div>
+
+  <footer>주식회사 와이엔프린팅 · 제조AI 스마트공장 이미지 ML 데이터 방법론</footer>
+</div>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.t).classList.add('active');
+  }));
+</script>
+</body>
+</html>

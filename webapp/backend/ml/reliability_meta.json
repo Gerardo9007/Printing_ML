@@ -1,0 +1,36 @@
+{
+  "model_type": "logreg_json",
+  "schema_version": 2,
+  "feature_names": [
+    "area_ratio",
+    "aspect_ratio",
+    "mean_diff_intensity",
+    "std_diff_intensity",
+    "edge_density",
+    "n_nearby_boxes",
+    "registration_n_inliers",
+    "diff_threshold_used",
+    "max_diff_intensity",
+    "diff_pixel_fraction"
+  ],
+  "decision_threshold": 0.5,
+  "trained_at": "2026-07-10T16:01:13.456798+09:00",
+  "train_rows": 931,
+  "val_rows": 311,
+  "val_accuracy": 0.9807,
+  "val_precision": 0.9143,
+  "val_recall": 1.0,
+  "val_confusion_matrix": [
+    [
+      241,
+      6
+    ],
+    [
+      0,
+      64
+    ]
+  ],
+  "class_weight": "balanced",
+  "n_positive_total": 255,
+  "n_negative_total": 987
+}

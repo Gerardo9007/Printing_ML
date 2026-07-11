@@ -20,5 +20,10 @@ webapp/ml-training/*.log
 docs/dev/*/output/
 docs/dev/*/__pycache__/
 
+# Claude Code / OMC local tool state (session logs, caches — not project source)
+.bkit/
+.claude/
+.omc/
+
 # OS / editor
 .DS_Store

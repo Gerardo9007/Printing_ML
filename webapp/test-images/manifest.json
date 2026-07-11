@@ -1,0 +1,75 @@
+{
+  "reference_image": "reference.png",
+  "samples": [
+    {
+      "file": "defective_01_typo.png",
+      "defect": {
+        "type": "오탈자",
+        "tag": "ingredient",
+        "note": "토너->토노",
+        "bbox": [
+          592.0,
+          316,
+          640.0,
+          340
+        ]
+      }
+    },
+    {
+      "file": "defective_02_missing_char.png",
+      "defect": {
+        "type": "문자누락",
+        "tag": "ingredient",
+        "note": "나이아신아마이드->나이신아마이드",
+        "bbox": [
+          254.0,
+          316,
+          446.0,
+          340
+        ]
+      }
+    },
+    {
+      "file": "defective_03_missing_period.png",
+      "defect": {
+        "type": "점누락",
+        "tag": "usage",
+        "note": "문장 끝 마침표 누락",
+        "bbox": [
+          60,
+          476,
+          588,
+          499
+        ]
+      }
+    },
+    {
+      "file": "defective_04_ingredient_error.png",
+      "defect": {
+        "type": "성분표시오류",
+        "tag": "ingredient",
+        "note": "'향료' 성분 누락",
+        "bbox": [
+          640.0,
+          316,
+          706.0,
+          340
+        ]
+      }
+    },
+    {
+      "file": "defective_05_bleed.png",
+      "defect": {
+        "type": "번짐",
+        "tag": "caution",
+        "note": "가우시안 블러+팽창으로 인쇄 번짐 모사",
+        "bbox": [
+          60,
+          636,
+          537,
+          659
+        ]
+      }
+    }
+  ]
+}

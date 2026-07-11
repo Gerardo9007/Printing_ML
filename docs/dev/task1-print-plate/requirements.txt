@@ -1,0 +1,7 @@
+opencv-python>=4.8
+numpy>=1.24
+Pillow>=10.0
+
+# 선택(미사용, 후속 OCR 결합 확장 시 필요) — 이 프로토타입 실행에는 필수 아님.
+# pytesseract를 쓰려면 Tesseract OCR 엔진 바이너리를 별도로 설치해야 한다.
+# pytesseract>=0.3.10
