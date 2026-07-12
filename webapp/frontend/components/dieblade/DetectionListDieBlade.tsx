@@ -8,9 +8,14 @@ function isCritical(kind: string): boolean {
   return CRITICAL_KINDS.includes(kind) || kind.startsWith("복합");
 }
 
+// 0.4, not 0.5 — matches reliability_dieblade_meta.json's decision_threshold
+// (train_reliability_dieblade.py picked 0.4 as the precision==recall balance
+// point; spec.md's "치명 결함 미검출 0" priority favors recall here).
+const RELIABILITY_THRESHOLD = 0.4;
+
 function ReliabilityIndicator({ score }: { score: number | null }) {
   if (score == null) return null;
-  if (score >= 0.5) {
+  if (score >= RELIABILITY_THRESHOLD) {
     return (
       <span className="inline-flex items-center gap-1 text-xs text-ink-secondary">
         <span

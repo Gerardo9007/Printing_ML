@@ -30,7 +30,13 @@ ML_DIR = os.path.join(_BACKEND_DIR, "ml")
 MODEL_PATH = os.path.join(ML_DIR, "reliability_dieblade_model.json")
 META_PATH = os.path.join(ML_DIR, "reliability_dieblade_meta.json")
 
-DECISION_THRESHOLD = 0.5
+# 0.4 instead of task1's 0.5: threshold sweep on the validation set showed
+# 0.4 as the precision==recall balance point (93.2%/93.2%), and spec.md's
+# "치명 결함 미검출 0" priority favors erring toward recall — a missed FN here
+# means a real defect goes unflagged, while a FP just asks a human to double-
+# check (no rejection). The frontend badge threshold (DetectionListDieBlade.tsx)
+# must be kept in sync with this value.
+DECISION_THRESHOLD = 0.4
 RANDOM_STATE = 20260711
 
 

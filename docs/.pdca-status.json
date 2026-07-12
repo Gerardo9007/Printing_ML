@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-07-11T09:55:09.711Z",
+  "lastUpdated": "2026-07-12T07:01:08.476Z",
   "activeFeatures": [
     "task1-print-plate",
     "task2-die-blade",
@@ -115,7 +115,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-10T03:10:13.152Z",
-        "lastUpdated": "2026-07-11T09:45:47.798Z"
+        "lastUpdated": "2026-07-12T07:00:33.624Z"
       },
       "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\ml-training\\train_reliability_dieblade.py"
     },
@@ -128,7 +128,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-11T07:58:19.196Z",
-        "lastUpdated": "2026-07-11T09:55:09.711Z"
+        "lastUpdated": "2026-07-12T07:01:08.476Z"
       },
       "lastFile": "C:\\Users\\amore\\Desktop\\26년 AP Claude Play Ground\\08 Printing ML\\webapp\\frontend\\components\\dieblade\\DetectionListDieBlade.tsx"
     },
@@ -154,7 +154,7 @@
   "session": {
     "startedAt": "2026-07-07T06:23:52.562Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-07-11T09:55:09.711Z"
+    "lastActivity": "2026-07-12T07:01:08.476Z"
   },
   "history": [
     {
@@ -1347,6 +1347,18 @@
     },
     {
       "timestamp": "2026-07-11T09:55:09.711Z",
+      "feature": "dieblade",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-12T07:00:33.624Z",
+      "feature": "ml-training",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-12T07:01:08.476Z",
       "feature": "dieblade",
       "phase": "do",
       "action": "updated"

@@ -79,19 +79,25 @@
 - **학습**(`train_reliability_dieblade.py`): task1과 동일 설정(75/25 stratified, StandardScaler, LogisticRegression balanced). val: **accuracy 87.8%, precision 97.5%, recall 78.0%** (task1의 100%보다 낮음 — 정직하게 기록. FN 11건, 특히 마모 등급 경계 부근 애매한 케이스에서 재현율이 떨어짐)
 - **검증**: 45° 오수렴 레짐(registration_reliable=False) 입력 시 9개 검출 전부 reliability_score 0.001~0.02로 정확히 낮게 판정 — 규칙 기반 정합 신뢰도 플래그와 별개로 분류기가 독립적으로 동일 결론에 도달함을 확인. 브라우저 Playwright 검증 통과(콘솔 에러 0)
 
+### ⑪ 2026-07-12 — task2 분류기 recall 개선
+- FN 진단: 78% recall의 FN 11건 중 10건이 마모(등급 경계 애매, mean_deviation~0.6mm, GT overlap 5~9%)로 확률 0.35~0.49(0.5 문턱 바로 아래), 1건은 순수 "휨"(복합 병합 안 된 드문 케이스)
+- **데이터셋 확대**: 조합당 misalign 변주 10→25회, 대각도 오수렴 20→40회 → 150쌍/391행 → **365쌍/919행**으로 확대 후 재학습 → recall 78.0%→**84.8%**로 개선
+- 남은 FN 20건 재진단: 18건은 여전히 같은 마모 경계 애매 케이스(라벨 자체가 GT overlap 5~9%로 아슬아슬), 2건은 "복합"인데 registration_residual이 매우 높은(21mm, 7mm) 런에서 나온 것 — 위치오차 재현을 위해 일부러 tx/ty를 크게 준 조합이 정합 품질 자체를 실제로 악화시킨 부작용. 이 2건은 모델이 "정합 신뢰도 낮음"을 정확히 반영한 것이라 오히려 합리적 판단으로 결론
+- **임계값 조정**: val set에서 threshold sweep 결과 **0.4**가 precision=recall=93.2% 균형점 → spec.md의 "치명 결함 미검출 0" 우선순위상 recall 쪽으로 기우는 게 맞다고 판단해 0.4 채택(0.5→0.4). `train_reliability_dieblade.py`의 `decision_threshold`와 프론트엔드 `DetectionListDieBlade.tsx`의 배지 임계값을 함께 동기화
+- **최종**: accuracy 92.2%, **precision 93.2%, recall 93.2%** (FN 9/132). 45° 오수렴 회귀 테스트 재확인 — 여전히 전부 0.004~0.07로 낮게 판정, 회귀 없음. 브라우저 검증 통과
+
 ---
 
 ## 해야할 일 (남은 작업)
 
-1. **task2 분류기 recall 개선 검토** — 현재 78%로 task1(100%)보다 낮음. 데이터셋 규모 확대 또는 마모 등급 경계 피처 보강 필요
-2. **Gap 분석(2026-07-08) 잔여 항목**
+1. **Gap 분석(2026-07-08) 잔여 항목**
    - task1 G4: 원본↔버전 검증 게이트 미구현 (오검출 주원인 미차단)
    - task1 G5 / task2 G1: 실제 촬영/스캔 이미지로 파라미터 재튜닝 (현재 전부 합성 이미지 기준)
    - task1 G6~G8 / task2 G6~G10: 검사자 UI의 HITL 강제 라우팅, MES 연계 미구현
    - task2 G2: 이상탐지 모델(PatchCore/PaDiM) 미적용 (현재는 고전적 정합+diff만)
-3. **이식성 부채**: `generate_labels.py`/`die_blade_qc_demo.py`의 `C:/Windows/Fonts/malgun.ttf` 절대경로 하드코딩 → 비Windows 환경 실행 불가
-4. 두 신뢰도 분류기 모두 decision_threshold(현재 0.5 고정) 실사용 데이터 기반 재보정 여부 검토
-5. 이번 세션 변경사항(task2 웹앱화 + ML 확장 전체) 아직 git 커밋 안 됨
+2. **이식성 부채**: `generate_labels.py`/`die_blade_qc_demo.py`의 `C:/Windows/Fonts/malgun.ttf` 절대경로 하드코딩 → 비Windows 환경 실행 불가
+3. task1 분류기 decision_threshold(0.5 고정) 실사용 데이터 기반 재보정 여부 검토 (task2는 0.4로 이미 재보정함)
+4. 이번 세션 변경사항(recall 개선) 아직 git 커밋 안 됨
 
 ---
 

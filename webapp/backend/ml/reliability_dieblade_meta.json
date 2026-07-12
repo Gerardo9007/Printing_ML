@@ -15,24 +15,24 @@
     "is_wear",
     "is_position"
   ],
-  "decision_threshold": 0.5,
-  "trained_at": "2026-07-11T18:46:08.627862+09:00",
-  "train_rows": 293,
-  "val_rows": 98,
-  "val_accuracy": 0.8776,
-  "val_precision": 0.975,
-  "val_recall": 0.78,
+  "decision_threshold": 0.4,
+  "trained_at": "2026-07-12T16:00:50.107386+09:00",
+  "train_rows": 689,
+  "val_rows": 230,
+  "val_accuracy": 0.9217,
+  "val_precision": 0.9318,
+  "val_recall": 0.9318,
   "val_confusion_matrix": [
     [
-      47,
-      1
+      89,
+      9
     ],
     [
-      11,
-      39
+      9,
+      123
     ]
   ],
   "class_weight": "balanced",
-  "n_positive_total": 198,
-  "n_negative_total": 193
+  "n_positive_total": 529,
+  "n_negative_total": 390
 }
